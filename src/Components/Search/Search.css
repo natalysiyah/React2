@@ -1,0 +1,14 @@
+.social-links li a {
+  background: #eff0f4;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  color: #7a7676;
+}
+ul li {
+  display: inline-block;
+}
