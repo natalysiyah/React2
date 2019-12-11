@@ -9,8 +9,7 @@ class ContactItem extends React.Component {
     facebook: this.props.facebook,
     twitter: this.props.twitter,
     btnRandom: false,
-    gender: this.props.gender,
-    starStatus: false
+    gender: this.props.gender
   };
   onButtonPress = () => {
     const randomFace = Math.floor(Math.random() * (99 - 1 + 1)) + 1;
@@ -19,11 +18,7 @@ class ContactItem extends React.Component {
       avatar: randomFace
     });
   };
-  onStarPress = () => {
-    this.setState({
-      starStatus: !this.state.starStatus
-    });
-  };
+
   render() {
     const { avatar, description, name, twitter, facebook, gender } = this.state;
     const URL = ` https://randomuser.me/api/portraits/${gender}/${avatar}.jpg  `;
@@ -32,7 +27,7 @@ class ContactItem extends React.Component {
       btnStyle = "btn btn-warning";
     }
     let starStyle = "fa fa-star-o";
-    if (this.state.starStatus) {
+    if (this.props.favorite) {
       starStyle = "fa fa-star";
     }
     return (
@@ -61,7 +56,7 @@ class ContactItem extends React.Component {
                     data-toggle="tooltip"
                     data-original-title="Delete"
                   >
-                    <i class="fa fa-close"></i>
+                    <i class="fa fa-close" onClick={this.props.onDelete}></i>
                   </a>
                 </div>
                 <div class="info">
@@ -137,7 +132,7 @@ class ContactItem extends React.Component {
                 class="fa fa-star-o"
                 className={starStyle}
                 aria-hidden="true"
-                onClick={this.onStarPress}
+                onClick={this.props.onStarPress}
               ></i>
               <button
                 type="button"
