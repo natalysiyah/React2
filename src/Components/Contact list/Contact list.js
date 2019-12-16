@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import "./Contact list.css";
 import ContactItem from "./ContactItem/ContactItem";
+import Search from "../Search/Search";
 
 const ContactList = ({ ContactList, onStarPress, onDelete }) => {
   const contactItem = ContactList.map(item => {
@@ -20,7 +21,12 @@ const ContactList = ({ ContactList, onStarPress, onDelete }) => {
     );
   });
 
-  return <Fragment>{contactItem}</Fragment>;
+  return (
+    <Fragment>
+      <Search></Search>
+      {contactItem}
+    </Fragment>
+  );
 };
 
 export default ContactList;
