@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ContactList from "./Components/Contact list/Contact list";
 import NotFound from "./Components/NotFound/NotFound";
 import MainMenu from "./Components/MainMenu/MainMenu";
+import AddNewContact from "./Components/AddNewContact/AddNewContact";
 
 class App extends React.Component {
   state = {
@@ -45,7 +46,18 @@ class App extends React.Component {
       }
     ]
   };
-
+  onEditContact = (name, description, avatar) => {
+    const newContact = {
+      id: 10,
+      description: hjkl,
+      avatar: 12,
+      gender: "women",
+      favorite: true
+    };
+    console.log("Name", this.state.name);
+    console.log("Desc", this.state.description);
+    console.log("Ava", this.state.avatar);
+  };
   onStarPress = id => {
     const index = this.state.List.findIndex(elem => elem.id === id);
     const newFavorite = this.state.List.slice();
@@ -91,6 +103,14 @@ class App extends React.Component {
                 />
               )}
             ></Route>
+            <Route
+              path="/add"
+              exact
+              component={() => (
+                <AddNewContact onEditContact={this.onEditContact} />
+              )}
+            ></Route>
+
             {/* <Route path="/" exact component={Search}></Route> */}
             <Route path="*" exact component={NotFound}></Route>
           </Switch>
