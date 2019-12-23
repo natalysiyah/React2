@@ -56,7 +56,7 @@ class ContactItem extends React.Component {
                     data-toggle="tooltip"
                     data-original-title="Delete"
                   >
-                    <i class="fa fa-close" onClick={this.props.onDelete}></i>
+                    <i className="fa fa-close" onClick={this.props.onDelete}></i>
                   </a>
                 </div>
                 <div class="info">

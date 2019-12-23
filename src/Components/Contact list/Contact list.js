@@ -3,7 +3,7 @@ import "./Contact list.css";
 import ContactItem from "./ContactItem/ContactItem";
 import Search from "../Search/Search";
 
-const ContactList = ({ ContactList, onStarPress, onDelete }) => {
+const ContactList = ({ ContactList, onStarPress, onDelete,onEditContact }) => {
   const contactItem = ContactList.map(item => {
     return (
       <ContactItem
@@ -17,6 +17,7 @@ const ContactList = ({ ContactList, onStarPress, onDelete }) => {
         favorite={item.favorite}
         onStarPress={() => onStarPress(item.id)}
         onDelete={() => onDelete(item.id)}
+        onEditContact={() =>onEditContact(item.id)}
       />
     );
   });

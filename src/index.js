@@ -11,6 +11,7 @@ import MainMenu from "./Components/MainMenu/MainMenu";
 import AddNewContact from "./Components/AddNewContact/AddNewContact";
 
 class App extends React.Component {
+  ID=100
   state = {
     List: [
       {
@@ -46,17 +47,34 @@ class App extends React.Component {
       }
     ]
   };
-  onEditContact = (name, description, avatar) => {
+  onEditContact = (name, description, avatar,id) => {
     const newContact = {
-      id: 10,
-      description: hjkl,
-      avatar: 12,
+      id: this.ID++,
+      name: name,
+      description: description,
+      avatar: avatar,
       gender: "women",
       favorite: true
     };
     console.log("Name", this.state.name);
     console.log("Desc", this.state.description);
     console.log("Ava", this.state.avatar);
+    const index = this.state.List.findIndex(elem => elem.id === id);
+    let counter = 0;
+    let newArr = [];
+    for (let i = 0; i < this.state.length; i++) {
+      if (i !== index) {
+        newArr[counter] = this.state.List[i];
+        counter++;
+      }
+    }
+
+    this.setState(() => {
+      return {
+        List: newArr
+        // ContactList={this.state.newArr}
+      };
+    });
   };
   onStarPress = id => {
     const index = this.state.List.findIndex(elem => elem.id === id);
@@ -98,7 +116,7 @@ class App extends React.Component {
               render={() => (
                 <ContactList
                   ContactList={this.state.List}
-                  onBtnFavorite={this.onBtnFavorite}
+                  onStarPress={this.onStarPress}
                   onDelete={this.onDelete}
                 />
               )}
