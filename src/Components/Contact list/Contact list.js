@@ -3,7 +3,13 @@ import "./Contact list.css";
 import ContactItem from "./ContactItem/ContactItem";
 import Search from "../Search/Search";
 
-const ContactList = ({ ContactList, onStarPress, onDelete,onEditContact }) => {
+const ContactList = ({
+  ContactList,
+  onStarPress,
+  onDelete,
+  onEditContact,
+  findById
+}) => {
   const contactItem = ContactList.map(item => {
     return (
       <ContactItem
@@ -15,9 +21,10 @@ const ContactList = ({ ContactList, onStarPress, onDelete,onEditContact }) => {
         twitter={item.twitter}
         gender={item.gender}
         favorite={item.favorite}
+        findById={() => findById(item.id)}
         onStarPress={() => onStarPress(item.id)}
         onDelete={() => onDelete(item.id)}
-        onEditContact={() =>onEditContact(item.id)}
+        onEditContact={() => onEditContact(item.id)}
       />
     );
   });

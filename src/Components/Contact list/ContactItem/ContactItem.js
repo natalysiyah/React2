@@ -1,5 +1,6 @@
 import React from "react";
 import "./ContactItem.css";
+import { Link } from "react-router-dom";
 
 class ContactItem extends React.Component {
   state = {
@@ -26,6 +27,7 @@ class ContactItem extends React.Component {
     if (this.state.btnRandom) {
       btnStyle = "btn btn-warning";
     }
+
     let starStyle = "fa fa-star-o";
     if (this.props.favorite) {
       starStyle = "fa fa-star";
@@ -40,15 +42,16 @@ class ContactItem extends React.Component {
                   <img class="thumb-lg img-circle bx-s" src={URL} alt="" />
                 </a>
                 <div class="pull-right btn-group-sm">
-                  <a
-                    href="#"
+                  <Link
+                    to="/edit"
                     class="btn btn-success tooltips"
                     data-placement="top"
                     data-toggle="tooltip"
                     data-original-title="Edit"
+                    onClick={this.props.findById}
                   >
                     <i class="fa fa-pencil"></i>
-                  </a>
+                  </Link>
                   <a
                     href="#"
                     class="btn btn-danger tooltips"
@@ -56,7 +59,10 @@ class ContactItem extends React.Component {
                     data-toggle="tooltip"
                     data-original-title="Delete"
                   >
-                    <i className="fa fa-close" onClick={this.props.onDelete}></i>
+                    <i
+                      className="fa fa-close"
+                      onClick={this.props.onDelete}
+                    ></i>
                   </a>
                 </div>
                 <div class="info">

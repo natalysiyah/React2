@@ -9,9 +9,10 @@ import ContactList from "./Components/Contact list/Contact list";
 import NotFound from "./Components/NotFound/NotFound";
 import MainMenu from "./Components/MainMenu/MainMenu";
 import AddNewContact from "./Components/AddNewContact/AddNewContact";
+import uuidv4 from "uuid";
+import EditContact from "./Components/EditContact/EditContact";
 
 class App extends React.Component {
-  ID=100
   state = {
     List: [
       {
@@ -45,35 +46,32 @@ class App extends React.Component {
         twitter: "https://twitter.com/modernlife991",
         favorite: true
       }
-    ]
+    ],
+    contactForEdit: ""
   };
-  onEditContact = (name, description, avatar,id) => {
+  onEditContact = (name, description, avatar, gender) => {
+    const id = uuidv4();
     const newContact = {
-      id: this.ID++,
+      id: id,
       name: name,
       description: description,
       avatar: avatar,
-      gender: "women",
-      favorite: true
+      gender: gender,
+      favorite: false
     };
-    console.log("Name", this.state.name);
-    console.log("Desc", this.state.description);
-    console.log("Ava", this.state.avatar);
+    let newList = this.state.List.slice();
+    newList.push(newContact);
+    this.setState({
+      List: newList
+    });
+  };
+  onStarPress = id => {
     const index = this.state.List.findIndex(elem => elem.id === id);
-    let counter = 0;
-    let newArr = [];
-    for (let i = 0; i < this.state.length; i++) {
-      if (i !== index) {
-        newArr[counter] = this.state.List[i];
-        counter++;
-      }
-    }
-
-    this.setState(() => {
-      return {
-        List: newArr
-        // ContactList={this.state.newArr}
-      };
+    const newFavorite = this.state.List.slice();
+    newFavorite[index].favorite = !newFavorite[index].favorite;
+    // console.log("id=> ", id);
+    this.setState({
+      favorite: !this.state.newFavorite
     });
   };
   onStarPress = id => {
@@ -90,7 +88,7 @@ class App extends React.Component {
     console.log(index);
     let counter = 0;
     let newArr = [];
-    for (let i = 0; i < this.state.length; i++) {
+    for (let i = 0; i < this.state.List.length; i++) {
       if (i !== index) {
         newArr[counter] = this.state.List[i];
         counter++;
@@ -104,6 +102,36 @@ class App extends React.Component {
       };
     });
   };
+  // onDelete = id => {
+  //   const index = this.state.List.findIndex(elem => elem.id === id);
+  //   console.log(index);
+  //   let counter = 0;
+  //   let newArr = [];
+  //   for (let i = 0; i < this.state.length; i++) {
+  //     if (i !== index) {
+  //       newArr[counter] = this.state.List[i];
+  //       counter++;
+  //     }
+  //   }
+
+  //   this.setState(() => {
+  //     return {
+  //       List: newArr
+  //       // ContactList={this.state.newArr}
+  //     };
+  //   });
+  // };
+  findById = id => {
+    const index = this.state.List.findIndex(elem => elem.id === id);
+    let contactForEdit;
+    for (let i = 0; i < this.state.List.length; i++) {
+      if (index === i) {
+        contactForEdit = this.state.List[i];
+      }
+    }
+    this.setState({ contactForEdit: contactForEdit });
+  };
+
   render() {
     return (
       <div className="container bootstrap snippet">
@@ -118,6 +146,7 @@ class App extends React.Component {
                   ContactList={this.state.List}
                   onStarPress={this.onStarPress}
                   onDelete={this.onDelete}
+                  findById={this.findById}
                 />
               )}
             ></Route>
@@ -128,7 +157,13 @@ class App extends React.Component {
                 <AddNewContact onEditContact={this.onEditContact} />
               )}
             ></Route>
-
+            <Route
+              path="/edit"
+              exact
+              component={() => (
+                <EditContact contactForEdit={this.state.contactForEdit} />
+              )}
+            ></Route>
             {/* <Route path="/" exact component={Search}></Route> */}
             <Route path="*" exact component={NotFound}></Route>
           </Switch>

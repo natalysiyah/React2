@@ -1,15 +1,13 @@
 import React, { Fragment } from "react";
-import "./AddNewContact.css";
 
-class AddNewContact extends React.Component {
+class EditContact extends React.Component {
   state = {
-    name: "",
-    description: "",
-    avatar: "",
-    gender: ""
+    name: this.props.contactForEdit.name,
+    description: this.props.contactForEdit.description,
+    avatar: this.props.contactForEdit.avatar
   };
+
   GetName = event => {
-    console.log(event.target.value);
     this.setState({
       name: event.target.value
     });
@@ -19,34 +17,31 @@ class AddNewContact extends React.Component {
       avatar: event.target.value
     });
   };
-  GetGender = event => {
-    this.setState({
-      gender: event.target.value
-    });
-  };
+
   GetDesc = event => {
     this.setState({
       description: event.target.value
     });
   };
-  GetUserData = () => {};
-  OnSubmit = e => {
+
+  onSubmit = e => {
     e.preventDefault();
-    console.log("onSubmit");
-    const { name, description, avatar, gender } = this.state;
-    this.props.onEditContact(name, description, avatar, gender);
+    const { name, description, avatar } = this.state;
+    console.log(name, description, avatar);
   };
+
   render() {
     return (
       <Fragment>
-        <form onSubmit={this.OnSubmit}>
+        <h2>Edit contact</h2>
+        <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="formGroupExampleInput">Name</label>
             <input
               type="text"
               className="form-control"
               id="formGroupExampleInput"
-              placeholder="Name"
+              placeholder={this.state.name}
               onChange={this.GetName}
             />
           </div>
@@ -56,7 +51,7 @@ class AddNewContact extends React.Component {
               type="text"
               className="form-control"
               id="formGroupExampleInput2"
-              placeholder="Description"
+              placeholder={this.state.description}
               onChange={this.GetDesc}
             />
           </div>
@@ -66,7 +61,7 @@ class AddNewContact extends React.Component {
               type="text"
               className="form-control"
               id="formGroupExampleInput2"
-              placeholder="Avatar"
+              placeholder={this.state.avatar}
               onChange={this.GetAvatar}
             />
           </div>
@@ -76,10 +71,8 @@ class AddNewContact extends React.Component {
               id="customRadio1"
               name="customRadio"
               className="custom-control-input"
-              value="women"
-              onChange={this.GetGender}
             />
-            <label className="custom-control-label" for="customRadio1">
+            <label className="custom-control-label" htmlFor="customRadio1">
               Woman
             </label>
           </div>
@@ -89,10 +82,8 @@ class AddNewContact extends React.Component {
               id="customRadio2"
               name="customRadio"
               className="custom-control-input"
-              value="man"
-              onChange={this.GetGender}
             />
-            <label className="custom-control-label" for="customRadio2">
+            <label className="custom-control-label" htmlFor="customRadio2">
               Man
             </label>
           </div>
@@ -104,4 +95,5 @@ class AddNewContact extends React.Component {
     );
   }
 }
-export default AddNewContact;
+
+export default EditContact;
